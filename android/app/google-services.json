@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "559703862130",
+    "project_id": "bus-sewa-d2ed8",
+    "storage_bucket": "bus-sewa-d2ed8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559703862130:android:adc3ee06a49033ac184beb",
+        "android_client_info": {
+          "package_name": "com.bus_sewa.bus_sewa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559703862130-k1qdegv9ojn8ls7ev9ts7tl8u830b8cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKgqVewA_rHB-fNTQV_86mDtNU8xx9OfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559703862130-k1qdegv9ojn8ls7ev9ts7tl8u830b8cr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
