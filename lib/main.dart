@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:bus_sewa/app_list/profile.dart';
 import 'package:bus_sewa/bus_list/bus_details/bus_detail.dart';
+import 'package:bus_sewa/home/booked_detail.dart';
 import 'package:bus_sewa/screens/profile.dart';
 import 'package:bus_sewa/screens/splash_screen.dart';
 import 'package:bus_sewa/screens/user_profile.dart';
@@ -31,10 +34,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:bus_sewa/bus_list/bus_details/Bus_details.dart';
 import 'package:bus_sewa/bus_list/bus_list.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  fetchReservedSeats();
   runApp(MyApp());
 }
 
@@ -92,5 +97,17 @@ class MyApp extends StatelessWidget {
         },
       );},
     );
+  }
+}
+
+
+
+void fetchReservedSeats() async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<String> reservedSeats = prefs.getStringList(BusBooked.bookedSeats);
+  if(reservedSeats != null) {
+    log(reservedSeats.toString());
+    selectedSeatNum = List.from(reservedSeats);
+    log(selectedSeatNum.toString());
   }
 }

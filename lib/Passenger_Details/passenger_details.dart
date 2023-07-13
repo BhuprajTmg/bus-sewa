@@ -1,6 +1,7 @@
 
 import 'dart:developer';
 
+import 'package:bus_sewa/bus_seats/bus_seats.dart';
 import 'package:flutter/material.dart';
 import 'package:bus_sewa/home/myTicket.dart';
 import 'package:bus_sewa/payment/payment_screen.dart';
@@ -100,7 +101,7 @@ class _passengerState extends State<passenger> {
                   'Passenger Details',
                   style: TextStyle(color: Colors.black, fontSize: 20),
                 ),
-                for (int i = 0; i < widget.passengerFields.length; i++)
+                for (int i = 0; i < newSelectedSeatNum.length; i++)
                   widget.passengerFields[i],
                 const SizedBox(
                   height: 10,
@@ -224,7 +225,7 @@ class BookingDetails {
 }
 
 class PassengerDetails extends StatefulWidget {
-  int _value = 0;
+  final int _value = 0;
 
   int get value => _value;
   String name = "";
@@ -311,7 +312,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
               child: Row(
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => setState(() => widget._value = 0),
+                    // onTap: () => setState(() => widget._value = 0),
                     child: Container(
                       height: 40,
                       width: 40,
@@ -326,7 +327,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                     width: 50,
                   ),
                   GestureDetector(
-                    onTap: () => setState(() => widget._value = 1),
+                    // onTap: () => setState(() => widget._value = 1),
                     child: Container(
                       height: 40,
                       width: 40,

@@ -173,7 +173,11 @@ class _paymentState extends State<payment> {
           widget.bookingDetails.journeydate
         ];
         await prefs.setBool(BusBooked.busBooked, true);
-         await prefs.setStringList(BusBooked.bookedSeats, selectedSeatNum);
+        
+         await prefs.setStringList(BusBooked.bookedSeats, selectedSeatNum).whenComplete(() {
+          selectedSeatNum.clear();
+          newSelectedSeatNum.clear();
+         });
         await prefs.setStringList(BusBooked.bookedData, bookedData);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

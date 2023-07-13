@@ -1,7 +1,7 @@
 import 'dart:developer' as logM;
 import 'dart:math';
 
-import 'package:bus_sewa/home/booked_detail.dart';
+import 'package:bus_sewa/main.dart';
 import 'package:flutter/material.dart';
 import 'package:bus_sewa/Passenger_Details/passenger_details.dart';
 import 'package:bus_sewa/uitls/staticVariables.dart';
@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as store;
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> selectedSeatNum = [];
+List<String> newSelectedSeatNum = [];
 class bus_seats extends StatefulWidget {
   static const routeName = '/bus_seats';
   String busname;
@@ -77,13 +78,15 @@ class _bus_seatsState extends State<bus_seats> with TickerProviderStateMixin{
   SharedPreferences prefs;
   List<String> bookedSeats= [];
   void getData() async {
+    fetchReservedSeats();
     prefs = await SharedPreferences.getInstance();
     this.setState(() {
-    bookedSeats = List.from(prefs.getStringList(BusBooked.bookedSeats) ?? []) ?? [];
-    bookedSeats.map((seatNum) {
+    bookedSeats = List.from(selectedSeatNum);
+    for(var seatNum in bookedSeats){
       widget.seatStatusMap[int.parse(seatNum)] = SeatStatus.Reserved;
+    }
     });
-    });
+
    }
 
   Widget buildButton(int seatNum) {
@@ -103,9 +106,12 @@ class _bus_seatsState extends State<bus_seats> with TickerProviderStateMixin{
           return;
           }
           if (widget.seatStatusMap[seatNum] == SeatStatus.Available) {
+            
+          newSelectedSeatNum.add(seatNum.toString());
           selectedSeatNum.add(seatNum.toString());
+          logM.log(selectedSeatNum.toString());
           widget.selectedCount = selectedSeatNum.length;
-          logM.log(widget.selectedCount.toString());
+          // logM.log(widget.selectedCount.toString());
           this.setState(() {
             widget.seatStatusMap[seatNum] = SeatStatus.Selected;
           });
@@ -113,8 +119,9 @@ class _bus_seatsState extends State<bus_seats> with TickerProviderStateMixin{
           }
           if (widget.seatStatusMap[seatNum] == SeatStatus.Selected) {
             selectedSeatNum.remove(seatNum.toString());
+            newSelectedSeatNum.remove(seatNum.toString());
             widget.selectedCount = selectedSeatNum.length;
-            logM.log(widget.selectedCount.toString());
+            // logM.log(widget.selectedCount.toString());
             this.setState(() {
               widget.seatStatusMap[seatNum] = SeatStatus.Available;
             });
@@ -163,7 +170,7 @@ class _bus_seatsState extends State<bus_seats> with TickerProviderStateMixin{
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios),
                 onPressed: () {
-                  selectedSeatNum.clear();
+                  newSelectedSeatNum.clear();
                   Navigator.pop(context);
                 }),
           ),
@@ -387,7 +394,7 @@ class _bus_seatsState extends State<bus_seats> with TickerProviderStateMixin{
                             Row(children: <Widget>[
                               const SizedBox(width: 10.0),
                               Text(
-                                "Seat no: $selectedSeatNum",
+                                "Seat no: $newSelectedSeatNum",
                                 style: const TextStyle(
                                   fontSize: 20.0,
                                 ),
