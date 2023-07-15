@@ -193,14 +193,20 @@ class _supportState extends State<support> {
                       style: TextStyle(fontSize: 17, color: Colors.black54),
                     ),
                     const SizedBox(
-                      width: 218,
+                      width: 230,
                     ),
                     // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: _launchURL,
-                      child: Image.asset(
-                        'assets/linkedin.png',
-                        height: 22,
+                    Flexible(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          onPressed: _launchURL,
+                          child: Image.asset(
+                            'assets/linkedin.png',
+                            height: 22,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -214,11 +220,10 @@ class _supportState extends State<support> {
                       style: TextStyle(fontSize: 17, color: Colors.black54),
                     ),
                     const SizedBox(
-                      width: 204,
+                      width: 200,
                     ),
                     // ignore: deprecated_member_use
-                    Flexible(
-                      child: Container(
+                      Container(
                         alignment: Alignment.centerRight,
                         padding: const EdgeInsets.only(right: 20),
                         child: FlatButton(
@@ -229,7 +234,6 @@ class _supportState extends State<support> {
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
 
@@ -240,14 +244,17 @@ class _supportState extends State<support> {
                       style: TextStyle(fontSize: 17, color: Colors.black54),
                     ),
                     const SizedBox(
-                      width: 223,
+                      width: 233,
                     ),
                     // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: _launchURL3,
-                      child: Image.asset(
-                        'assets/github.png',
-                        height: 22,
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: FlatButton(
+                        onPressed: _launchURL3,
+                        child: Image.asset(
+                          'assets/github.png',
+                          height: 22,
+                        ),
                       ),
                     ),
                   ],

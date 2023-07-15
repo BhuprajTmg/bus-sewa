@@ -61,6 +61,7 @@ class _userProfileState extends State<userProfile> {
               ),
               leading: const SizedBox(),
               centerTitle: true,
+              
               title: const Text(
                 'Profile',
                 style: TextStyle(

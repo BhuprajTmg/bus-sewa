@@ -1,3 +1,4 @@
+import 'package:bus_sewa/bus_seats/bus_seats.dart';
 import 'package:bus_sewa/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -185,7 +186,19 @@ class _busDetailsState extends State<busDetails> {
                             horizontal: 32.0,
                           ),
                           onPressed: () {
-                            showAlertDialog(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => bus_seats(
+                                        from: widget.from,
+                                        path: widget.path,
+                                        to: widget.to,
+                                        busname: widget.busname,
+                                        date: widget.date,
+                                        price: widget.Price,
+                                        seatStatus: widget.seatStatus,
+                                      )),
+                            );
                           },
                           child: const Text(
                             "Book Now",

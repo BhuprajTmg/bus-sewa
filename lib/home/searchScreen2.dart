@@ -1,9 +1,9 @@
+import 'package:bus_sewa/bus_list/bus_list2.dart';
 import 'package:bus_sewa/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bus_sewa/home/bottom_bar.dart';
 import 'package:bus_sewa/payment/wallet_partners.dart';
-import 'package:bus_sewa/bus_list/bus_list.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:bus_sewa/screens/login_screen.dart';
 import 'package:bus_sewa/support/support_screen.dart';
@@ -359,7 +359,7 @@ class _searchScreenWithoutUserState extends State<searchScreenWithoutUser> {
                             Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Reservations(
+                                builder: (context) => busList2(
                                       str1: city1,
                                       str2: city2,
                                       date: dateController.text,
