@@ -1,52 +1,27 @@
-import 'dart:developer';
+import 'package:bus_sewa/screens/signup_screen.dart';
+import 'package:flutter/material.dart';
 
 import 'package:bus_sewa/home/bottom_bar.dart';
 import 'package:bus_sewa/payment/wallet_partners.dart';
-import 'package:bus_sewa/screens/user_profile.dart';
-import 'package:bus_sewa/widgets/model/users_model.dart';
-import 'package:flutter/material.dart';
 import 'package:bus_sewa/bus_list/bus_list.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:bus_sewa/screens/login_screen.dart';
 import 'package:bus_sewa/support/support_screen.dart';
 import 'package:bus_sewa/uitls/custom_clipper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SearchScreen extends StatefulWidget {
-  static const routeName = '/search';
-  const SearchScreen({Key key}) : super(key: key);
 
+class searchScreenWithoutUser extends StatefulWidget {
+  const searchScreenWithoutUser({Key key}) : super(key: key);
+  static const routeName = '/searchScreenTwo';
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  State<searchScreenWithoutUser> createState() => _searchScreenWithoutUserState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _searchScreenWithoutUserState extends State<searchScreenWithoutUser> {
   DateTime currentDate = DateTime.now();
   final dateController = TextEditingController();
 
-  UserModel usermodel = UserModel();
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
-  bool isLoading = false;
-
-  getUser()async{
-    setState(() {
-      isLoading=true;
-    });
-
-    await _firebaseFirestore.collection("User")
-    .doc(_auth.currentUser.uid)
-    
-    .get()
-    .then((value){
-      setState(() {
-        isLoading = false;
-      });
-      usermodel = UserModel.fromJson(value.data());
-      log(usermodel.toString());
-    });
-  }
 
   // @override
   // void initState() {
@@ -55,12 +30,6 @@ class _SearchScreenState extends State<SearchScreen> {
   //   super.initState();
   // }
 
-  @override
-  void initState() {
-    getUser();
-    readData();
-    super.initState();
-  }
 
   String city1, city2;
   String Name;
@@ -110,14 +79,42 @@ class _SearchScreenState extends State<SearchScreen> {
       String From, String To, BuildContext context) async {
     
   }
+  showAlertDialog(BuildContext context) {
+    backgroundColor:Colors.blue;
+  // set up the button
+  Widget okButton = FlatButton(
+    child: const Text("OK"),
+    onPressed: () { 
+      Navigator.pushNamed(context, SignupScreen.routeName);
+    
+    },
+  );
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    
+    title: const Text("User not Logged In"),
+    content: const Text("You need to log into the system to get your profile"),
+    actions: [
+      okButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
         child: Container(
           color: Colors.white,
-          child: dataarrived
-              ? ListView(
+          child: 
+              ListView(
                   padding: const EdgeInsets.only(top: 0),
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
@@ -129,27 +126,23 @@ class _SearchScreenState extends State<SearchScreen> {
                           height: 70,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(70),
-                            image: usermodel.profile != null && usermodel.profile.isNotEmpty
-                         ?   DecorationImage(
-                              image: NetworkImage(usermodel.profile)
-                            )
-                            : const DecorationImage(image: AssetImage("assets/profile.png")
+                            image: const DecorationImage(image: AssetImage("assets/profile.png")
                             )
                           ),
                         ),
-                        accountName: Text(
-                          Name,
-                          style: const TextStyle(
+                        accountName: const Text(
+                          "Hello! There",
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        accountEmail: Padding(
-                          padding: const EdgeInsets.only(bottom: 0.0),
+                        accountEmail: const Padding(
+                          padding: EdgeInsets.only(bottom: 0.0),
                           child: Text(
-                            Email,
-                            style: const TextStyle(
+                            "Alex@gmail.com",
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -169,11 +162,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     ListTile(
                       leading: const Icon(Icons.assignment_ind_rounded),
                       title: const Text(
-                        'My Profile',
+                        'Your Profile',
                         style: TextStyle(fontSize: 18.0),
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, userProfile.routeName);
+                        showAlertDialog(context);
                         bottomBar.changeIndex(2);
                       },
                     ),
@@ -220,25 +213,17 @@ class _SearchScreenState extends State<SearchScreen> {
                     ListTile(
                       leading: const Icon(Icons.logout),
                       title: const Text(
-                        'Log Out',
+                        'Sign In',
                         style: TextStyle(fontSize: 18.0),
                       ),
                       onTap: () async {
-                        await auth.signOut().whenComplete(() { 
-                          log(auth.currentUser.toString());
-                          Navigator.pushReplacementNamed(context,LoginScreen.routeName);});
+
+                          Navigator.pushReplacementNamed(context,LoginScreen.routeName);
                       },
                     ),
                   ],
                 )
-              : Container(
-                  child: Column(  
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Center(child: CircularProgressIndicator()),
-                  ],
-                )),
+            
         ),
       ),
       appBar: PreferredSize(
@@ -395,20 +380,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Future<void> readData() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    final String userID = auth.currentUser.uid;
-    DocumentReference docRef = FirebaseFirestore.instance
-        .collection('User')
-        .doc(userID);
-    await docRef.get().then((querySnapshot) {
-      Name = querySnapshot.get('firstname');
-
-      Email = querySnapshot.get('email');
-    });
-
-    setState(() {
-      dataarrived = true;
-    });
-  }
 }
+
+  

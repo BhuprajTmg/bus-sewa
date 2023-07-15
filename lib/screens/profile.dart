@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:bus_sewa/widgets/model/users_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
 class profilePage extends StatefulWidget {
   const profilePage({Key key}) : super(key: key);
@@ -13,8 +17,12 @@ class profilePage extends StatefulWidget {
 
 class _profilePageState extends State<profilePage> {
   
+  final _formKey = GlobalKey<FormState>();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  
   bool isLoading = false;
   UserModel usermodel = UserModel();
 
@@ -23,6 +31,9 @@ class _profilePageState extends State<profilePage> {
   TextEditingController email= TextEditingController();
   TextEditingController phoneNumber= TextEditingController();
   TextEditingController address= TextEditingController();
+  TextEditingController profile= TextEditingController();
+  
+  File _image;
 
   getUser() async {
     setState(() {
@@ -44,6 +55,40 @@ class _profilePageState extends State<profilePage> {
     email.text = usermodel.email;
     phoneNumber.text = usermodel.phonenumber;
     address.text = usermodel.address;
+    profile.text = usermodel.profile;
+    
+  }
+
+  Future<void> updateUser(File image) async {
+    final storage = _firebaseStorage.ref("User/${_auth.currentUser.uid}");
+    storage.putFile(image);
+    String profileUrl = await storage.getDownloadURL();
+    CollectionReference colRef = FirebaseFirestore.instance.collection('User');
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final String userID = auth.currentUser.uid;
+    UserModel usermodel = UserModel(
+      firstname: firstName.text,
+      lastname: lastName.text,
+      phonenumber: phoneNumber.text,
+      address: address.text,
+      profile: profileUrl,
+    );
+    colRef
+        .doc(userID)
+        .set(usermodel.toJson(), SetOptions(merge: true))
+        .then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Data Updated Successfully...',
+          style: TextStyle(
+            color: Colors.lightGreen,
+          ),
+        ),
+      ));
+      Future.delayed(const Duration(seconds: 2), () {
+        //Navigator.pop(context);
+      });
+    });
   }
 
   @override
@@ -94,9 +139,18 @@ class _profilePageState extends State<profilePage> {
                                   Container(
                                       width: 140.0,
                                       height: 140.0,
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        image: DecorationImage(
+                                        image: _image != null
+                                        ?DecorationImage(
+                                            image: FileImage(_image),
+                                            fit: BoxFit.cover)
+                                        :
+                                        usermodel.profile != null || usermodel.profile.isNotEmpty
+                                        ? DecorationImage(
+                                            image: NetworkImage(usermodel.profile),
+                                            fit: BoxFit.cover)
+                                        : const DecorationImage(
                                             image: AssetImage('assets/as.png'),
                                             fit: BoxFit.cover),
                                       )),
@@ -107,13 +161,23 @@ class _profilePageState extends State<profilePage> {
                                       top: 90.0, right: 70.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        radius: 25.0,
-                                        child: Icon(
-                                          Icons.camera_alt,
-                                          color: Colors.white,
+                                    children: <Widget>[
+                                      InkWell(
+                                        onTap: () async{
+                                          var imagePicker = await ImagePicker.platform.pickImage(source: ImageSource.camera) ;
+                                          if(imagePicker != null) {
+                                            setState(() {
+                                            _image = File(imagePicker.path);
+                                            });
+                                          }
+                                        },
+                                        child: const CircleAvatar(
+                                          backgroundColor: Colors.green,
+                                          radius: 25.0,
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       )
                                     ],
@@ -395,14 +459,22 @@ class _profilePageState extends State<profilePage> {
         .collection('User');
     FirebaseAuth auth = FirebaseAuth.instance;
     final String userID = auth.currentUser.uid;
+    // for image
+    FirebaseStorage storage =  FirebaseStorage.instance;
+    Reference ref= storage.ref("User/$userID");
+    await ref.putFile(_image);
+    String imagePath = await ref.getDownloadURL();
+
     UserModel usermodel= UserModel(
       firstname: firstName.text,
       lastname: lastName.text,
       email: email.text,
       phonenumber: phoneNumber.text,
       address: address.text,
+      profile: imagePath
     );
-    colRef.doc(userID).set(usermodel.toJson(),
+    
+    await colRef.doc(userID).set(usermodel.toJson(),
      SetOptions(merge: true)).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green.shade700,

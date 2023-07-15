@@ -127,8 +127,10 @@ class _paymentState extends State<payment> {
                   Container(
                     child: Lottie.asset('assets/wallet.json',height: 161,),
                   ),
-                  Container(
-                    child: Image.asset('assets/khalti.png',width: 170,height:160,),
+                  Flexible(
+                    child: Container(
+                      child: Image.asset('assets/khalti.png',width: 170,height:160,),
+                    ),
                   )
                 ],
               ),

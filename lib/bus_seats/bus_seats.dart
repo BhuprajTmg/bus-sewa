@@ -272,9 +272,6 @@ class _bus_seatsState extends State<bus_seats> with TickerProviderStateMixin{
                         buildButton(7),
                         const SizedBox(width: 20.0),
                         buildButton(8),
-                        const SizedBox(
-                          width: 20,
-                        ),
                       ],
                     ),
                     Row(

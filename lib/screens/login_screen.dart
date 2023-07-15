@@ -13,12 +13,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailEditingController = TextEditingController(
-    text: "a@gmail.com"
-  );
-  final TextEditingController _passwordEditingController = TextEditingController(
-text:  "12345678"
-  );
+  final TextEditingController _emailEditingController = TextEditingController();
+  final TextEditingController _passwordEditingController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {

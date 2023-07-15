@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:bus_sewa/app_list/profile.dart';
 import 'package:bus_sewa/bus_list/bus_details/bus_detail.dart';
 import 'package:bus_sewa/home/booked_detail.dart';
+import 'package:bus_sewa/home/bottom_bar2.dart';
+import 'package:bus_sewa/home/searchScreen2.dart';
+import 'package:bus_sewa/payment/wallet_partners.dart';
 import 'package:bus_sewa/screens/profile.dart';
 import 'package:bus_sewa/screens/splash_screen.dart';
 import 'package:bus_sewa/screens/user_profile.dart';
@@ -53,7 +56,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home:  MyHomePage(),
+        home:   MyHomePage(),
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
       supportedLocales: const [
@@ -93,14 +96,17 @@ class MyApp extends StatelessWidget {
           addBus.routeName: (ctx) => const addBus(),
           adminHome.routeName: (ctx) => const adminHome(),
           adminProfile.routeName: (ctx) => const adminProfile(),
+          paymentPartner.routeName: (ctx) => const paymentPartner(),
+          searchScreenWithoutUser.routeName: (ctx) => const searchScreenWithoutUser(),
+          bottomBar2.routeName: (ctx) => const bottomBar2(),
+          MyHomePage.routeName: (ctx) =>  MyHomePage() 
+          
           
         },
       );},
     );
   }
 }
-
-
 
 void fetchReservedSeats() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();

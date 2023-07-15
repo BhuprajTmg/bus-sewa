@@ -1,7 +1,11 @@
+import 'package:bus_sewa/bus_seats/bus_seats.dart';
+import 'package:bus_sewa/screens/login_screen.dart';
 import 'package:bus_sewa/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class busDetails extends StatefulWidget {
+class busDetails2 extends StatefulWidget {
   static const routeName = '/bus_details';
   final String busname;
   final String Price;
@@ -13,7 +17,7 @@ class busDetails extends StatefulWidget {
   final String path;
   final Map<String, bool> seatStatus;
 
-  const busDetails(
+  const busDetails2(
       {Key key,
       this.busname,
       this.Price,
@@ -27,40 +31,11 @@ class busDetails extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<busDetails> createState() => _busDetailsState();
+  State<busDetails2> createState() => _busDetails2State();
 }
 
-class _busDetailsState extends State<busDetails> {
+class _busDetails2State extends State<busDetails2> {
   final String image = 'assets/image_detail.png';
-
-  showAlertDialog(BuildContext context) {
-    backgroundColor:
-    Colors.blue;
-    // set up the button
-    Widget okButton = FlatButton(
-      child: const Text("OK"),
-      onPressed: () {
-        Navigator.pushNamed(context, SignupScreen.routeName);
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: const Text("User not Logged In"),
-      content:
-          const Text("You need to log into the system to book the bus ticket."),
-      actions: [
-        okButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,7 +160,16 @@ class _busDetailsState extends State<busDetails> {
                             horizontal: 32.0,
                           ),
                           onPressed: () {
-                            showAlertDialog(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("you need to login first."),
+                                duration: Duration(
+                                    seconds:
+                                        2), // Adjust the duration as needed
+                              ),
+                            );
+
+                            Navigator.pushNamed(context, SignupScreen.routeName);
                           },
                           child: const Text(
                             "Book Now",

@@ -699,7 +699,6 @@ class EachBus extends StatelessWidget {
               children: <Widget>[
                 const Icon(Icons.directions_bus_sharp,
                     color: Colors.black, size: 32),
-                const SizedBox(width: 15),
                 Text(
                   busbean.busName,
                   style: const TextStyle(
@@ -712,9 +711,12 @@ class EachBus extends StatelessWidget {
                   '\u{20B9}',
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                 ),
-                Text(busbean.price,
-                    style:
-                        const TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
+                Container(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Text(busbean.price,
+                      style:
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
+                ),
               ],
             ),
             //SizedBox(height: 10),

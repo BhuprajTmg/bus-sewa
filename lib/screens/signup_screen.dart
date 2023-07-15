@@ -1,3 +1,4 @@
+import 'package:bus_sewa/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bus_sewa/screens/components/auth.dart';
 
@@ -22,7 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
           icon: const Icon(Icons.arrow_back_ios),
           color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pushNamed(context,MyHomePage.routeName);
           },
         ),
       ),

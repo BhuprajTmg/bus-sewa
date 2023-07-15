@@ -22,7 +22,7 @@ _sendingSMS() async {
 }
 
 _launchURL() async {
-  const url = 'https://www.linkedin.com/in/sampath-h-s-571122214/';
+  const url = 'https://www.linkedin.com/in/bhupraj-tamang-7713a2227/';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -31,7 +31,7 @@ _launchURL() async {
 }
 
 _launchURL2() async {
-  const url = 'https://github.com/SampathHS/TracknGo/';
+  const url = 'https://www.facebook.com/bhupraj.tamang';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -40,7 +40,7 @@ _launchURL2() async {
 }
 
 _launchURL3() async {
-  const url = 'https://github.com/SampathHS/TracknGo/';
+  const url = 'https://github.com/BhuprajTmg/bus-sewa';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -61,14 +61,14 @@ class _supportState extends State<support> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Support',
-          style: TextStyle(color: Colors.yellowAccent),
+          style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.blue[300],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.yellowAccent,
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -91,7 +91,7 @@ class _supportState extends State<support> {
                 Container(
                   height: 20.0,
                 ),
-                Text(
+                const Text(
                   'we are here to help you with any information and problems through our contact center.',
                   style: TextStyle(letterSpacing: 0.5, fontSize: 16),
                 ),
@@ -99,7 +99,7 @@ class _supportState extends State<support> {
                   height: 10.0,
                 ),
 
-                Text(
+                const Text(
                   'Mail us',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -107,10 +107,10 @@ class _supportState extends State<support> {
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   'Tsaroj895@gmail.com',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -136,7 +136,7 @@ class _supportState extends State<support> {
                 Container(
                   height: 20.0,
                 ),
-                Text(
+                const Text(
                   'Or Send SMS',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -144,10 +144,10 @@ class _supportState extends State<support> {
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   'Tsaroj895@gmail.com',
                   style: TextStyle(
                     fontSize: 18.0,
@@ -155,7 +155,7 @@ class _supportState extends State<support> {
                     //fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 // ignore: deprecated_member_use
@@ -176,32 +176,79 @@ class _supportState extends State<support> {
                 // SizedBox(
                 //   height: 20,
                 // ),
-                Text(
-                  'Developers',
+                const Text(
+                  'Developers contact',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: <Widget>[
-                    Text(
-                      'Bhupraj Tmg',
+                    const Text(
+                      'Linkdin',
                       style: TextStyle(fontSize: 17, color: Colors.black54),
                     ),
-                    SizedBox(
-                      width: 185,
+                    const SizedBox(
+                      width: 218,
                     ),
                     // ignore: deprecated_member_use
                     FlatButton(
+                      onPressed: _launchURL,
                       child: Image.asset(
                         'assets/linkedin.png',
                         height: 22,
                       ),
-                      onPressed: _launchURL,
+                    ),
+                  ],
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const Text(
+                      'Facebook',
+                      style: TextStyle(fontSize: 17, color: Colors.black54),
+                    ),
+                    const SizedBox(
+                      width: 204,
+                    ),
+                    // ignore: deprecated_member_use
+                    Flexible(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 20),
+                        child: FlatButton(
+                          onPressed: _launchURL2,
+                          child: Image.asset(
+                            'assets/facebook.png',
+                            height: 22,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                Row(
+                  children: <Widget>[
+                    const Text(
+                      'github',
+                      style: TextStyle(fontSize: 17, color: Colors.black54),
+                    ),
+                    const SizedBox(
+                      width: 223,
+                    ),
+                    // ignore: deprecated_member_use
+                    FlatButton(
+                      onPressed: _launchURL3,
+                      child: Image.asset(
+                        'assets/github.png',
+                        height: 22,
+                      ),
                     ),
                   ],
                 ),

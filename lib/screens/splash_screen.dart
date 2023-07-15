@@ -2,11 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:bus_sewa/widgets/model/slide.dart';
 import 'package:bus_sewa/screens/login_screen.dart';
-import 'package:bus_sewa/screens/signup_screen.dart';
 import 'package:bus_sewa/widgets/slide_dots.dart';
 import 'package:bus_sewa/widgets/slideitem.dart';
+import 'package:bus_sewa/home/bottom_bar2.dart';
 
 class MyHomePage extends StatefulWidget {
+  static const routeName="/myhomepage ";
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -141,10 +142,10 @@ class _SecondScreenState extends State<SecondScreen> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       padding: const EdgeInsets.all(15),
-                      color: Colors.yellowAccent,
+                      color: Colors.blue[300],
                       textColor: Colors.black,
                       onPressed: () {
-                        Navigator.of(context).pushNamed(SignupScreen.routeName);
+                        Navigator.of(context).pushNamed(bottomBar2.routeName);
                       },
                       child: const Text(
                         'GET STARTED',
@@ -160,7 +161,7 @@ class _SecondScreenState extends State<SecondScreen> {
                         ),
                         FlatButton(
                           child: const Text(
-                            'login',
+                            'Log In',
                             style:
                                 TextStyle(fontSize: 18.0, color: Colors.black),
                           ),
